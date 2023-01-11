@@ -26,9 +26,17 @@ class Task(models.Model):
     owner = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='tasks')
     participants = models.ManyToManyField(User, related_name='completed_tasks')
-    checkbox = models.BooleanField(default=False)
+
     importance = models.CharField(
         max_length=1, choices=IMPORTANCE_CHOICES, null=True, blank=True)
+
+    def check_is_complete(self):
+        users_completions = self.owner.completions
+        completed_tasks = [completion.task for completion in users_completions]
+        if self in completed_tasks:
+            return True
+        else:
+            return False
 
     def __str__(self):
         return f'{self.title} to be completed by {self.owner}'
@@ -41,7 +49,7 @@ class Completion(models.Model):
         auto_now_add=True, blank=True, null=True)
     debrief = models.TextField(max_length=500, null=True, blank=True)
     task = models.ForeignKey(
-        Task, on_delete=models.CASCADE, related_name='completions')
+        Task, on_delete=models.CASCADE, related_name='tasks')
 
 # class Group(models.Model):
 #     task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='tasks')

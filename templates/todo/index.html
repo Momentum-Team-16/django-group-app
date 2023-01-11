@@ -1,9 +1,15 @@
+
 {% extends 'base.html' %}
 
 {% block content %} 
 
 <h2>All Tasks</h2>
     {% for task in tasks.all %}
+    <div data-task-pk="{{task.pk}}">
     <p>{{task}}</p>
+    <button data-task-pk="{{task.pk}}" id="complete-button">Complete</button>
+    </div>
     {% endfor %}
 {% endblock %}
+
+

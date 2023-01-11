@@ -21,4 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('registration.backends.simple.urls')),
     path('', views.index, name='home'),
+    path('task/complete/<int:task_pk>',
+         views.create_completion, name='create-completion'),
 ]
