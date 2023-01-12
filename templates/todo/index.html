@@ -4,9 +4,9 @@
 
 <h2>All Tasks</h2>
 {% for task in tasks %}
-<div data-task-pk="{{task.pk}}">
+<div class="_{{task.importance}}" data-task-pk="{{task.pk}}">
   {% if task in completed_tasks %}
-  <p><strike>{{ task }}</strike></p>
+  <p class="completed">{{ task }}</p>
   {% else %}
   <p>{{ task }}</p>
   <button data-task-pk="{{task.pk}}" class="complete-button">Complete</button>

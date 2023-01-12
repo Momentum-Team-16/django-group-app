@@ -2,6 +2,20 @@ body {
   background-color: rgb(156, 223, 223);
 }
 
-.completed {
+._1 > p {
+  border: 2px, rgb (81, 196, 81);
+  color: rgb(81, 196, 81);
+}
+
+._2 > p {
+  color: rgb(211, 157, 58);
+}
+
+._3 > p {
+  color: rgb(219, 54, 54);
+}
+
+p.completed {
   text-decoration: line-through;
+  color: black;
 }
