@@ -45,6 +45,7 @@ def create_task(request):
                 'task_title': task.title,
                 'task_details': task.details,
                 'task_importance': task.importance,
+                'task_pk': task.pk,
             }
         else:
             data = {'errors': form.errors}
