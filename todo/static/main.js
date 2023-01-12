@@ -45,3 +45,49 @@ for (let complete_button of complete_buttons) {
       });
   });
 }
+
+const form = document.querySelector('#create-form');
+
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
+  console.log('submitted');
+  console.log(form);
+  const formData = new FormData(form);
+
+  for (let pair of formData.entries()) {
+    console.log(`${pair[0]}: ${pair[1]}`);
+  }
+  fetch('tasks/create_new', {
+    method: 'POST',
+    credentials: 'same-origin',
+    headers: {
+      Accept: 'application/json',
+      'X-Requested-With': 'XMLHttpRequest',
+      'X-CSRFToken': csrftoken,
+    },
+    body: formData,
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      console.log(data);
+      const task = document.querySelector('#task-list');
+      let newCard = document.createElement('div');
+      let newEl = document.createElement('p');
+      let detailsTitle = document.createElement('h5');
+      let details = document.createElement('p');
+      let button = document.createElement('button');
+      button.classList.add('complete-button');
+      newEl.innerText = `${data.task_title}`;
+      detailsTitle.innerText = 'Details:';
+      details.innerText = `${data.task_details}`;
+      button.innerText = 'Complete';
+      task.appendChild(newCard);
+      newCard.appendChild(newEl);
+      newCard.appendChild(detailsTitle);
+      newCard.appendChild(details);
+      newCard.appendChild(button);
+      newCard.classList.add('task-item', `_${data.task_importance}`);
+    });
+});

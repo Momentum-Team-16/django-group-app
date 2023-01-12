@@ -23,4 +23,5 @@ urlpatterns = [
     path('', views.index, name='home'),
     path('task/complete/<int:task_pk>',
          views.create_completion, name='create-completion'),
+    path('tasks/create_new', views.create_task, name='create-task'),
 ]

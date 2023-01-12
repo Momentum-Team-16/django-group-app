@@ -3,15 +3,24 @@
 {% block content %}
 
 <h2>All Tasks</h2>
-{% for task in tasks %}
-<div class="_{{task.importance}}" data-task-pk="{{task.pk}}">
-  {% if task in completed_tasks %}
-  <p class="completed">{{ task }}</p>
-  {% else %}
-  <p>{{ task }}</p>
-  <button data-task-pk="{{task.pk}}" class="complete-button">Complete</button>
-  {% endif %}
+<div id="task-list">
+  {% for task in tasks %}
+  <div class="_{{task.importance}} task-item" data-task-pk="{{task.pk}}">
+    {% if task in completed_tasks %}
+    <p class="completed">{{ task }}</p>
+    {% else %}
+    <p>{{ task }}</p>
+    <h5>Details:</h5>
+    <p class="details">{{ task.details }}</p>
+    <button data-task-pk="{{task.pk}}" class="complete-button">Complete</button>
+    {% endif %}
+  </div>
+  {% endfor %}
 </div>
-{% endfor %}
+<form class="box" id="create-form">
+  <h3>Add a new task:</h3>
+  {% csrf_token %} {{ form.as_p }}
+  <button type="submit" class="button is-info is-hovered">Save</button>
+</form>
 <!-- spacer -->
 {% endblock %}
