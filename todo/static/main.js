@@ -89,5 +89,33 @@ form.addEventListener('submit', (event) => {
       newCard.appendChild(details);
       newCard.appendChild(button);
       newCard.classList.add('task-item', `_${data.task_importance}`);
+
+      // create new complete button
+
+      button.addEventListener('click', (event) => {
+        console.log('completed');
+        let incompleteTaskDiv = complete_button.closest('div');
+        console.log(`task parent div: ${incompleteTaskDiv}`);
+        let incompleteTask = incompleteTaskDiv.firstElementChild;
+        console.log(`incomplete task: ${incompleteTask}`);
+        incompleteTask.classList.add('completed');
+        complete_button.remove();
+
+        fetch(`task/complete/${complete_button.dataset.taskPk}`, {
+          method: 'GET',
+          credentials: 'same-origin',
+          headers: {
+            Accept: 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRFToken': csrftoken,
+          },
+        })
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            console.log(data);
+          });
+      });
     });
 });
