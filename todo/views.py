@@ -7,8 +7,11 @@ from .models import User, Task, Completion
 
 def index(request):
     tasks = Task.objects.all()
+    completed_tasks = [completion.task for completion in Completion.objects.filter(completed_by=request.user)]
     context = {
         'tasks': tasks,
+        'completed_tasks': completed_tasks,
+
     }
     return render(request, 'todo/index.html', context)
 

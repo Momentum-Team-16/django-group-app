@@ -25,11 +25,12 @@ class Task(models.Model):
     address = models.CharField(max_length=200, null=True, blank=True)
     owner = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='tasks')
-    participants = models.ManyToManyField(User, related_name='completed_tasks')
+    participants = models.ManyToManyField(User, related_name='completed_tasks', blank=True)
 
     importance = models.CharField(
         max_length=1, choices=IMPORTANCE_CHOICES, null=True, blank=True)
 
+    @property
     def check_is_complete(self):
         users_completions = self.owner.completions
         completed_tasks = [completion.task for completion in users_completions]

@@ -1,15 +1,17 @@
-
 {% extends 'base.html' %}
-
-{% block content %} 
+<!-- spacer -->
+{% block content %}
 
 <h2>All Tasks</h2>
-    {% for task in tasks.all %}
-    <div data-task-pk="{{task.pk}}">
-    <p>{{task}}</p>
-    <button data-task-pk="{{task.pk}}" id="complete-button">Complete</button>
-    </div>
-    {% endfor %}
+{% for task in tasks %}
+<div data-task-pk="{{task.pk}}">
+  {% if task in completed_tasks %}
+  <p><strike>{{ task }}</strike></p>
+  {% else %}
+  <p>{{ task }}</p>
+  <button data-task-pk="{{task.pk}}" class="complete-button">Complete</button>
+  {% endif %}
+</div>
+{% endfor %}
+<!-- spacer -->
 {% endblock %}
-
-
