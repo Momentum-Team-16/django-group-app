@@ -21,6 +21,12 @@ const complete_buttons = document.querySelectorAll('.complete-button');
 for (let complete_button of complete_buttons) {
   complete_button.addEventListener('click', (event) => {
     console.log('completed');
+    let incompleteTaskDiv = complete_button.closest('div');
+    console.log(`task parent div: ${incompleteTaskDiv}`);
+    let incompleteTask = incompleteTaskDiv.firstElementChild;
+    console.log(`incomplete task: ${incompleteTask}`);
+    incompleteTask.classList.add('completed');
+    complete_button.remove();
 
     fetch(`task/complete/${complete_button.dataset.taskPk}`, {
       method: 'GET',
